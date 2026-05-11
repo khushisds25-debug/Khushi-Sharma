@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HTML5 APIs Demo</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background: #f4f6f9;
+text-align: center;
+padding: 20px;
+}
+h1 {
+color: #333;
+}
+.container {
+margin: 20px auto;
+padding: 20px;
+width: 80%;
+background: white;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+/* Drag & Drop */
+#dragBox {
+width: 100px;
+height: 100px;
+background: #4CAF50;
+color: white;
+line-height: 100px;
+margin: 10px auto;
+cursor: grab;
+}
+#dropArea {
+width: 200px;
+height: 150px;
+border: 2px dashed #333;
+margin: 10px auto;
+line-height: 150px;
+}
+/* Buttons */
+button {
+padding: 10px 15px;
+margin: 10px;
+border: none;
+background: #2196F3;
+color: white;
+border-radius: 5px;
+cursor: pointer;
+}
+button:hover {
+background: #0b7dda;
+}
+input {
+padding: 8px;
+width: 200px;
+}
+</style>
+</head>
+<body>
+<h1>HTML5 APIs Demo</h1>
+<!-- Drag & Drop -->
+<div class="container">
+<h2>Drag & Drop</h2>
+<div id="dragBox" draggable="true" ondragstart="drag(event)">Drag me</div>
+<div id="dropArea" ondrop="drop(event)" ondragover="allowDrop(event)">
+Drop here
+</div>
+</div>
+<!-- Geolocation -->
+<div class="container">
+<h2>Geolocation</h2>
+<button onclick="getLocation()">Get Location</button>
+<p id="location"></p>
+</div>
+<!-- Web Storage -->
+<div class="container">
+<h2>Web Storage (Local Storage)</h2>
+<input type="text" id="nameInput" placeholder="Enter your name">
+<br>
+<button onclick="saveData()">Save</button>
+<button onclick="showData()">Show Saved Data</button>
+<p id="storageResult"></p>
+</div>
+<script>
+// Drag & Drop
+function allowDrop(ev) {
+ev.preventDefault();
+}
+function drag(ev) {
+ev.dataTransfer.setData("text", ev.target.id);
+}
+// Geolocation
+function getLocation() {
+if (navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(showPosition);
+} else {
+document.getElementById("location").innerHTML = "Geolocation not supported.";
+}
+}
+function showPosition(position) {
+document.getElementById("location").innerHTML =
+"Latitude: " + position.coords.latitude +
+"<br>Longitude: " + position.coords.longitude;
+}
+// Web Storage
+function saveData() {
+let name = document.getElementById("nameInput").value;
+localStorage.setItem("username", name);
+alert("Data Saved!");
+}
+function showData() {
+let data = localStorage.getItem("username");
+document.getElementById("storageResult").innerHTML = "Saved Name: " + data;
+}
+</script>
+</body>
+</html>
